@@ -36,6 +36,14 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
+    @Transactional
+    public void deletePost(Long postId) {
+        var post = postRepository.findById(postId)
+                .orElseThrow(() -> new NoSuchElementException());
+        postRepository.delete(post);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public PostDto.PostResponseDto findPost(Long postId) {
         var post = postRepository.findById(postId)

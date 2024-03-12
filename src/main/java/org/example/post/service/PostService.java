@@ -9,6 +9,8 @@ public interface PostService {
 
     void updatePost(Long postId, PostDto.PostUpdateDto postDto);
 
+    void deletePost(Long postId);
+
     PostDto.PostResponseDto findPost(Long postId);
 
     List<PostDto.PostResponseDto> findAll();
