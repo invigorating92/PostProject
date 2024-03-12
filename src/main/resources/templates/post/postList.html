@@ -11,8 +11,12 @@
         <th>제목</th>
     </tr>
     <tr th:each="post : ${postList}">
-        <td th:text="${post.postId}"></td>
-        <td th:text="${post.title}" th:onclick="|location.href='@{/posts/{postId}(postId=${post.postId})}'|"></td>
+        <td th:text="${post.postId}">번호</td>
+        <td>
+            <a th:href="@{|/posts/${post.postId}|}" th:text="${post.title}">제목</a>
+        </td>
+<!--        th:onclick 사용법-->
+<!--        <td th:text="${post.title}" th:onclick="|location.href='@{/posts/{postId}(postId=${post.postId})}'|">-->
     </tr>
 </table>
 </body>
