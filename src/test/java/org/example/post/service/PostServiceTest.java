@@ -81,4 +81,26 @@ class PostServiceTest {
         assertThat(findPostList.get(1).getTitle()).isEqualTo("제목2");
         assertThat(findPostList.get(1).getContent()).isEqualTo("내용2");
     }
+
+    @Test
+    @DisplayName("게시글 수정 테스트")
+    void updatePost() {
+        //given
+        var post = Post.builder().id(1L).title("제목").content("내용").build();
+        var postDto = PostDto.PostUpdateDto.builder().title("수정 제목").content("수정 내용").build();
+        given(postRepository.findById(anyLong())).willReturn(Optional.ofNullable(post));
+
+        System.out.println(post.getTitle());
+        System.out.println(post.getContent());
+
+        //when
+        postService.updatePost(post.getId(), postDto);
+
+        //then
+        assertThat(post.getTitle()).isEqualTo("수정 제목");
+        assertThat(post.getContent()).isEqualTo("수정 내용");
+
+        System.out.println(post.getTitle());
+        System.out.println(post.getContent());
+    }
 }

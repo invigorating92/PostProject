@@ -28,9 +28,18 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
+    @Transactional
+    public void updatePost(Long postId, PostDto.PostUpdateDto postDto) {
+        var post = postRepository.findById(postId)
+                .orElseThrow(() -> new NoSuchElementException());
+        post.updateText(postDto.getTitle(), postDto.getContent());
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public PostDto.PostResponseDto findPost(Long postId) {
-        var post = postRepository.findById(postId).orElseThrow(() -> new NoSuchElementException());
+        var post = postRepository.findById(postId)
+                .orElseThrow(() -> new NoSuchElementException());
 
         return PostDto.PostResponseDto.builder()
                 .postId(post.getId())

@@ -5,10 +5,7 @@ import org.example.post.dto.PostDto;
 import org.example.post.service.PostService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -42,4 +39,21 @@ public class PostController {
         model.addAttribute("postList", postService.findAll());
         return "post/postList";
     }
+
+    @GetMapping("/posts/{postId}/update")
+    public String updatePost(@PathVariable Long postId, Model model) {
+        PostDto.PostResponseDto postDto = postService.findPost(postId);
+        model.addAttribute("postDto", postDto);
+        return "post/updatePost";
+    }
+
+    @PostMapping("/posts/{postId}/update")
+    public String updatePost(@PathVariable Long postId,
+                             @ModelAttribute PostDto.PostUpdateDto postDto,
+                             RedirectAttributes redirectAttributes) {
+        postService.updatePost(postId, postDto);
+        redirectAttributes.addAttribute("postId", postId);
+        return "redirect:/posts/{postId}";
+    }
+
 }
