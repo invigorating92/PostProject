@@ -103,4 +103,17 @@ class PostServiceTest {
         System.out.println(post.getTitle());
         System.out.println(post.getContent());
     }
+
+    @Test
+    @DisplayName("게시글 삭제 테스트")
+    void deletePost() {
+        //given
+        var post = Post.builder().id(1L).title("제목").content("내용").build();
+        given(postRepository.findById(anyLong())).willReturn(Optional.ofNullable(post));
+        //when
+        postService.deletePost(post.getId());
+
+        //then
+        verify(postRepository).delete(post);
+    }
 }
