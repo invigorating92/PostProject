@@ -5,6 +5,7 @@
     <title>Post</title>
 </head>
 <body>
+<h1>게시글 조회</h1>
     <div th:object="${postDto}">
         <div>
             <span>번호</span>
@@ -16,9 +17,10 @@
         </div>
         <div>
             <span>내용</span>
-            <textarea th:text="*{content}" readonly></textarea>
+            <textarea cols="30" rows="10" th:text="*{content}" readonly></textarea>
         </div>
     </div>
     <button th:onclick="|location.href='@{/posts/list}'|">목록</button>
+    <button th:onclick="|location.href='@{/posts/{postId}/update(postId=${postDto.postId})}'|">수정</button>
 </body>
 </html>
